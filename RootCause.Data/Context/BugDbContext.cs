@@ -1,56 +1,29 @@
-using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using RootCause.Core.Entities;
 
 namespace RootCause.Data.Context;
 
-public class BugDBContext
+public class BugDBContext : DbContext
 {
-    private readonly string _connectionString;
+    public DbSet<Bug> Bugs { get; set; }
 
-    public BugDBContext()
+    public BugDBContext(DbContextOptions<BugDBContext> options)
+        : base(options) { }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        var dbFolder = Path.Combine(home, ".RootCauseData");
-        Directory.CreateDirectory(dbFolder);
-
-        var dbPath = Path.Combine(dbFolder, "RootCauseData.db3");
-        _connectionString = $"Data Source={dbPath}";
-
-        InitialiseDatabase();
-    }
-
-    private void InitialiseDatabase()
-    {
-        using var conn = new SqliteConnection(_connectionString);
-        conn.Open();
-
-        var cmd = conn.CreateCommand();
-
-        cmd.CommandText = """
-            CREATE TABLE IF NOT EXISTS Bugs (
-                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                Title TEXT NOT NULL,
-                ErrorMessage TEXT NOT NULL,
-                RootCause TEXT NOT NULL,
-                Fix TEXT NOT NULL,
-                TimeToSolve INTEGER NOT NULL,
-                StackTags TEXT NOT NULL,
-                ResolvedAt DATE,
-                Serverity INTEGER NOT NULL,
-                CreatedAt DATE NOT NULL
-            );
-            """;
-        cmd.ExecuteNonQuery();
-    }
-
-    public SqliteConnection? GetConnection()
-    {
-        try
+        modelBuilder.Entity<Bug>(entity =>
         {
-            return new SqliteConnection(_connectionString);
-        }
-        catch
-        {
-            return null;
-        }
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Title).IsRequired();
+            entity.Property(e => e.ErrorMessage).IsRequired();
+            entity.Property(e => e.RootCause).IsRequired();
+            entity.Property(e => e.Fix).IsRequired();
+            entity.Property(e => e.TimeToSolve).IsRequired();
+            entity.Property(e => e.StackTags).IsRequired();
+            entity.Property(e => e.ResolvedAt).IsRequired();
+            entity.Property(e => e.Serverity).IsRequired();
+            entity.Property(e => e.CreatedAt).IsRequired();
+        });
     }
 }
