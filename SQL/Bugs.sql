@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS Bugs (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Title TEXT NOT NULL,
+    ErrorMessage TEXT NOT NULL,
+    RootCause TEXT NOT NULL,
+    Fix TEXT NOT NULL,
+    TimeToSolve DATE NOT NULL,
+    StackTags TEXT NOT NULL,
+    CreatedAt DATE NOT NULL,
+    UpdatedAt DATE NOT NULL
+);

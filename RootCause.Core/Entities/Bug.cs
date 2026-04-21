@@ -13,7 +13,7 @@ public class Bug
     public string RootCause { get; set; } = string.Empty;
 
     public string Fix { get; set; } = string.Empty;
-    public TimeSpan TimeToSolve { get; set; }
+    public int TimeToSolve { get; set; }
     public string StackTags { get; set; } = string.Empty; // comma-separated or JSON array
     public DateTime CreatedAt { get; set; }
     public DateTime? ResolvedAt { get; set; }
