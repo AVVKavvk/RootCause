@@ -36,10 +36,57 @@
                        Margin="0,0,0,12"/>
 
             <!-- Search -->
-            <TextBox Grid.Row="2"
-                     PlaceholderText="Search bugs..."
-                     Text="{Binding SearchText}"
-                     Margin="0,0,0,12"/>
+            <Grid Grid.Row="2"
+                  ColumnDefinitions="Auto,*,Auto,Auto,Auto"
+                  ColumnSpacing="12"
+                  Margin="0,0,0,30">
+
+                <!-- Search Type -->
+                <StackPanel Grid.Column="0" Spacing="4">
+                    <TextBlock Text="Search Type" Foreground="#CCCCCC"/>
+                    <ComboBox ItemsSource="{Binding SearchTypes}"
+                              SelectedItem="{Binding SearchType}"
+                              Background="#2A2A2A"
+                              Foreground="White"
+                              Width="150"/>
+                </StackPanel>
+
+                <!-- Search -->
+                <StackPanel Grid.Column="1" Spacing="4">
+                    <TextBlock Text="Search" Foreground="#CCCCCC"/>
+                    <TextBox PlaceholderText="Search bugs..."
+                             Text="{Binding SearchText}"
+                             Background="#2A2A2A"
+                             Foreground="White"/>
+                </StackPanel>
+
+                <!-- Severity -->
+                <StackPanel Grid.Column="2" Spacing="4">
+                    <TextBlock Text="Severity" Foreground="#CCCCCC"/>
+                    <ComboBox ItemsSource="{Binding Severities}"
+                              SelectedItem="{Binding SearchSeverity}"
+                              Background="#2A2A2A"
+                              Foreground="White"
+                              Width="150"/>
+                </StackPanel>
+
+                <!-- From -->
+                <StackPanel Grid.Column="3" Spacing="4">
+                    <TextBlock Text="From" Foreground="#CCCCCC"/>
+                    <DatePicker SelectedDate="{Binding FromDate}"
+                                Background="#2A2A2A"
+                                Foreground="White"/>
+                </StackPanel>
+
+                <!-- To -->
+                <StackPanel Grid.Column="4" Spacing="4">
+                    <TextBlock Text="To" Foreground="#CCCCCC"/>
+                    <DatePicker SelectedDate="{Binding ToDate}"
+                                Background="#2A2A2A"
+                                Foreground="White"/>
+                </StackPanel>
+
+            </Grid>
 
             <!-- Table -->
             <DataGrid Grid.Row="3"
@@ -58,7 +105,7 @@
                     <DataGridTextColumn Header="Severity" Binding="{Binding Serverity}" />
                     <DataGridTextColumn Header="Created At"
                                         Binding="{Binding CreatedAt}"
-                                        Width="120"/>
+                                        />
                 </DataGrid.Columns>
 
             </DataGrid>

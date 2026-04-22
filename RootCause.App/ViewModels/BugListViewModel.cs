@@ -41,14 +41,36 @@ public partial class BugListViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Bug> _bugs = new();
 
+    // Vars
     [ObservableProperty]
-    private string _searchText = string.Empty;
+    private bool _isCreatePopupOpen;
 
     [ObservableProperty]
     private Bug? _selectedBug;
 
+    // Filters
     [ObservableProperty]
-    private bool _isCreatePopupOpen;
+    private string _searchText = string.Empty;
+
+    [ObservableProperty]
+    private SearchTypeEnum _searchType = SearchTypeEnum.Title;
+
+    public Array SearchTypes => Enum.GetValues(typeof(SearchTypeEnum));
+
+    [ObservableProperty]
+    private Serverity _searchSeverity = Serverity.LOW;
+
+    [ObservableProperty]
+    private DateTimeOffset? _fromDate;
+
+    [ObservableProperty]
+    private DateTimeOffset? _toDate;
+
+    partial void OnSearchSeverityChanged(Serverity value)
+    {
+        Console.WriteLine($"Search severity changed to {value}");
+        FilterBug(SearchText);
+    }
 
     partial void OnSearchTextChanged(string value)
     {
@@ -56,7 +78,29 @@ public partial class BugListViewModel : ObservableObject
         FilterBug(value);
     }
 
-    private void FilterBug(string text) { }
+    partial void OnSearchTypeChanged(SearchTypeEnum value)
+    {
+        Console.WriteLine($"Search type changed to {value}");
+        FilterBug(SearchText);
+    }
+
+    partial void OnFromDateChanged(DateTimeOffset? value)
+    {
+        Console.WriteLine($"From date changed to {value}");
+        FilterBug(SearchText);
+    }
+
+    partial void OnToDateChanged(DateTimeOffset? value)
+    {
+        Console.WriteLine($"To date changed to {value}");
+        FilterBug(SearchText);
+    }
+
+    //   Filters Function
+    private void FilterBug(string text)
+    {
+        Console.WriteLine($"Filtering bug with text {text} with search type {SearchType}");
+    }
 
     [RelayCommand]
     private void RefershBugs() => _ = LoadBugsAsync();
