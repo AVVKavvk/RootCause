@@ -26,6 +26,10 @@
                         Background="#2BE92B"
                         Foreground="Black"
                         Command="{Binding CreateBugCommand}" />
+                <Button Content="Delete"
+                        Background="#F1442D"
+                        Foreground="White"
+                        Command="{Binding DeleteBugCommand}" />
 
                 <Button Content="Refresh"
                         Background="#3A3A3A"

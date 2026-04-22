@@ -1,6 +1,11 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Layout;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RootCause.App.Views;
@@ -142,6 +147,77 @@ public partial class BugListViewModel : ObservableObject
         IsCreatePopupOpen = false; // close popup
         Title = ErrorMessage = RootCause = Fix = StackTags = string.Empty;
         TimeToSolve = 0;
+        await LoadBugsAsync();
+    }
+
+    [RelayCommand]
+    private async Task DeleteBugAsync()
+    {
+        if (SelectedBug == null)
+            return;
+
+        var mainWindow = (
+            Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime
+        )?.MainWindow;
+
+        var dialog = new Window
+        {
+            Width = 320,
+            Height = 160,
+            Title = "Confirm Delete",
+            WindowStartupLocation = WindowStartupLocation.CenterOwner,
+            CanResize = false,
+            Background = new SolidColorBrush(Color.Parse("#1E1E1E")),
+        };
+
+        bool result = false;
+
+        var cancelBtn = new Button { Content = "Cancel" };
+        cancelBtn.Click += (_, _) => dialog.Close();
+
+        var deleteBtn = new Button { Content = "Delete", Background = Brushes.Red };
+        deleteBtn.Click += (_, _) =>
+        {
+            result = true;
+            dialog.Close();
+        };
+
+        dialog.Content = new StackPanel
+        {
+            Margin = new Thickness(20),
+            Spacing = 10,
+            Children =
+            {
+                new TextBlock
+                {
+                    Text = $"Delete \"{SelectedBug.Title}\"?",
+                    Foreground = Brushes.White,
+                    TextWrapping = TextWrapping.Wrap,
+                },
+                new StackPanel
+                {
+                    Orientation = Avalonia.Layout.Orientation.Horizontal,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    Spacing = 10,
+                    Children = { cancelBtn, deleteBtn },
+                },
+            },
+        };
+
+        if (mainWindow != null)
+        {
+            await dialog.ShowDialog(mainWindow);
+        }
+        else
+        {
+            dialog.Show(); // fallback (non-modal)
+        }
+        ;
+
+        if (!result)
+            return;
+
+        await _bugService.DeleteBugAsync(SelectedBug.Id);
         await LoadBugsAsync();
     }
 
