@@ -9,6 +9,10 @@
 # avvk
 **/avvk/
 
+# build
+build/windows*
+build/linux*
+
 # User-specific files
 *.rsuser
 *.suo
