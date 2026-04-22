@@ -34,13 +34,20 @@ public partial class App : Application
         collection.AddViewModels();
 
         var services = collection.BuildServiceProvider();
+        collection.AddSingleton<IServiceProvider>(services);
+
         using var scope = services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<BugDBContext>();
         await db.Database.MigrateAsync();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainWindow { DataContext = new MainWindowViewModel() };
+            desktop.MainWindow = new MainWindow
+            {
+                DataContext = // Get it from DI — not new!
+                DataContext =
+                    services.GetRequiredService<MainWindowViewModel>(),
+            };
         }
 
         base.OnFrameworkInitializationCompleted();

@@ -1,0 +1,13 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RootCause.App.ViewModels"
+             x:Class="RootCause.App.Views.DashboardView"
+             x:DataType="vm:DashboardViewModel">
+
+    <StackPanel Margin="24" Spacing="12">
+        <TextBlock Text="Dashboard" FontSize="24" FontWeight="Bold"/>
+        <TextBlock Text="{Binding TotalBugs, StringFormat='Total Bugs!: {0}'}"/>
+        <TextBlock Text="{Binding BugThisWeek, StringFormat='This Week: {0}'}"/>
+    </StackPanel>
+
+</UserControl>

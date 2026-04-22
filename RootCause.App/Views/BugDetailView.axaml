@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RootCause.App.ViewModels"
+             x:Class="RootCause.App.Views.BugDetailView"
+             x:DataType="vm:BugDetailViewModel">
+    <ScrollViewer>
+        <StackPanel Margin="24" Spacing="12">
+            <TextBlock Text="Bug Detail" FontSize="24" FontWeight="Bold"/>
+            <TextBox PlaceholderText="Title" Text="{Binding Title}"/>
+            <TextBox PlaceholderText="Error Message" Text="{Binding ErrorMessage}" AcceptsReturn="True" Height="80"/>
+            <TextBox PlaceholderText="Root Cause" Text="{Binding RootCause}" AcceptsReturn="True" Height="80"/>
+            <TextBox PlaceholderText="Fix" Text="{Binding Fix}" AcceptsReturn="True" Height="80"/>
+            <TextBox PlaceholderText="Stack Tags (comma separated)" Text="{Binding StackTags}"/>
+            <NumericUpDown Value="{Binding TimeToSolve}" Minimum="0" />
+            <Button Content="Save" Command="{Binding SaveCommand}" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

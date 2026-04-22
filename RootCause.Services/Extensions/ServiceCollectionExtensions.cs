@@ -7,7 +7,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddScoped<IBugService, BugService>();
+        services.AddTransient<IBugService, BugService>();
         return services;
     }
 }
