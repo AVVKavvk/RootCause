@@ -21,6 +21,9 @@
         <DataTemplate DataType="vm:StatsViewModel">
             <views:StatsView />
         </DataTemplate>
+        <DataTemplate DataType="vm:BugDetailsViewModel">
+            <views:BugDetailsView />
+        </DataTemplate>
     </Window.DataTemplates>
 
     <Grid ColumnDefinitions="200,*">

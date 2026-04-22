@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using RootCause.App.Views;
 using RootCause.Core.Entities;
 using RootCause.Core.Enums;
 using RootCause.Core.Interfaces;
@@ -142,6 +143,17 @@ public partial class BugListViewModel : ObservableObject
         Title = ErrorMessage = RootCause = Fix = StackTags = string.Empty;
         TimeToSolve = 0;
         await LoadBugsAsync();
+    }
+
+    [RelayCommand]
+    private void OpenBugDetails()
+    {
+        if (SelectedBug == null)
+            return;
+
+        var window = new BugDetailsView { DataContext = new BugDetailsViewModel(SelectedBug) };
+
+        window.Show();
     }
 
     [RelayCommand]

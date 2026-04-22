@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RootCause.App.ViewModels"
+             x:Class="RootCause.App.Views.BugDetailsView"
+             x:DataType="vm:BugDetailsViewModel">
+
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="10">
+
+            <TextBlock Text="{Binding Title}"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="White"/>
+
+            <TextBlock Text="Error Message" Foreground="#CCCCCC"/>
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="White"/>
+
+            <TextBlock Text="Root Cause" Foreground="#CCCCCC"/>
+            <TextBlock Text="{Binding RootCause}" Foreground="White"/>
+
+            <TextBlock Text="Fix" Foreground="#CCCCCC"/>
+            <TextBlock Text="{Binding Fix}" Foreground="White"/>
+
+            <TextBlock Text="Stack Tags" Foreground="#CCCCCC"/>
+            <TextBlock Text="{Binding StackTags}" Foreground="White"/>
+
+            <TextBlock Text="Severity" Foreground="#CCCCCC"/>
+            <TextBlock Text="{Binding Serverity}" Foreground="White"/>
+
+            <TextBlock Text="Created At" Foreground="#CCCCCC"/>
+            <TextBlock Text="{Binding CreatedAt}" Foreground="White"/>
+
+        </StackPanel>
+    </ScrollViewer>
+</Window>

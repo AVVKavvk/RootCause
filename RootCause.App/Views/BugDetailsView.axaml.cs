@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace RootCause.App.Views;
 
-public partial class BugDetailView : UserControl
+public partial class BugDetailsView : Window
 {
-    public BugDetailView()
+    public BugDetailsView()
     {
         InitializeComponent();
     }

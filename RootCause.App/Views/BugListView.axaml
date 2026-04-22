@@ -16,6 +16,12 @@
                         HorizontalAlignment="Right"
                         Spacing="8">
 
+                        <Button Content="Open"
+                        Margin="8,0,0,0"
+                        Background="#497EF1"
+                        Foreground="White"
+                        Command="{Binding OpenBugDetailsCommand}"
+                        IsEnabled="{Binding SelectedBug}"/>
                 <Button Content="Create"
                         Background="#2BE92B"
                         Foreground="Black"
