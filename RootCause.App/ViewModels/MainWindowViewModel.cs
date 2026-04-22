@@ -53,11 +53,11 @@ public partial class MainWindowViewModel : ObservableObject
     private void NavigateToStats() => CurrentPage = Stats;
 
     // BugDetail needs a bug passed in
-    [RelayCommand]
-    private void NavigateToBugDetail(Bug? bug = null)
-    {
-        var bugService = _services.GetRequiredService<IBugService>();
-        var detail = new BugDetailViewModel(bugService, bug); // new or edit
-        CurrentPage = detail;
-    }
+    // [RelayCommand]
+    // private void NavigateToBugDetail(Bug? bug = null)
+    // {
+    //     var bugService = _services.GetRequiredService<IBugService>();
+    //     var detail = new BugDetailViewModel(bugService, bug); // new or edit
+    //     CurrentPage = detail;
+    // }
 }

@@ -4,54 +4,174 @@
              x:Class="RootCause.App.Views.BugListView"
              x:DataType="vm:BugListViewModel">
 
-    <Grid RowDefinitions="Auto,Auto,*" Margin="24">
+    <!-- ROOT GRID -->
+    <Grid>
 
-        <TextBlock Grid.Row="0"
-                   Text="Bug List" FontSize="24"
-                   FontWeight="Bold" Margin="0,0,0,12"/>
+        <!-- ================= MAIN CONTENT ================= -->
+        <Grid RowDefinitions="Auto,Auto,Auto,*" Margin="24">
 
-        <TextBox Grid.Row="1"
-                 PlaceholderText="Search bugs..."
-                 Text="{Binding SearchText}"
-                 Margin="0,0,0,12"/>
+            <!-- Buttons -->
+            <StackPanel Grid.Row="0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Spacing="8">
 
-        <DataGrid Grid.Row="2"
-                  ItemsSource="{Binding Bugs}"
-                  SelectedItem="{Binding SelectedBug}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  GridLinesVisibility="Horizontal"
-                  CanUserReorderColumns="True"
-                  CanUserResizeColumns="True"
-                  CanUserSortColumns="True">
+                <Button Content="Create"
+                        Background="#2BE92B"
+                        Foreground="Black"
+                        Command="{Binding CreateBugCommand}" />
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Title"
-                                    Binding="{Binding Title}"
-                                    Width="200"/>
-                <DataGridTextColumn Header="Error Message"
-                                    Binding="{Binding ErrorMessage}"
-                                    Width="250"/>
-                <DataGridTextColumn Header="Root Cause"
-                                    Binding="{Binding RootCause}"
-                                    Width="200"/>
-                <DataGridTextColumn Header="Fix"
-                                    Binding="{Binding Fix}"
-                                    Width="200"/>
-                <DataGridTextColumn Header="Stack Tags"
-                                    Binding="{Binding StackTags}"
-                                    Width="150"/>
-                <DataGridTextColumn Header="Time To Solve (min)"
-                                    Binding="{Binding TimeToSolve}"
-                                    Width="150"/>
-                <DataGridTextColumn Header="Severity"
-                                    Binding="{Binding Serverity}"
-                                    Width="100"/>
-                <DataGridTextColumn Header="Created At"
-                                    Binding="{Binding CreatedAt, StringFormat='{}{0:dd MMM yyyy}'}"
-                                    Width="120"/>
-            </DataGrid.Columns>
+                <Button Content="Refresh"
+                        Background="#3A3A3A"
+                        Foreground="White"
+                        Command="{Binding RefershBugsCommand}" />
 
-        </DataGrid>
+            </StackPanel>
+
+            <!-- Title -->
+            <TextBlock Grid.Row="1"
+                       Text="Bug List"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Margin="0,0,0,12"/>
+
+            <!-- Search -->
+            <TextBox Grid.Row="2"
+                     PlaceholderText="Search bugs..."
+                     Text="{Binding SearchText}"
+                     Margin="0,0,0,12"/>
+
+            <!-- Table -->
+            <DataGrid Grid.Row="3"
+                      ItemsSource="{Binding Bugs}"
+                      SelectedItem="{Binding SelectedBug}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
+                    <DataGridTextColumn Header="Error Message" Binding="{Binding ErrorMessage}" />
+                    <DataGridTextColumn Header="Root Cause" Binding="{Binding RootCause}"/>
+                    <DataGridTextColumn Header="Fix" Binding="{Binding Fix}" Width="300" />
+                    <DataGridTextColumn Header="Stack Tags" Binding="{Binding StackTags}" />
+                    <DataGridTextColumn Header="Time To Solve (Min)" Binding="{Binding TimeToSolve}" />
+                    <DataGridTextColumn Header="Severity" Binding="{Binding Serverity}" />
+                    <DataGridTextColumn Header="Created At"
+                                        Binding="{Binding CreatedAt}"
+                                        Width="120"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </Grid>
+
+        <!-- ================= POPUP OVERLAY ================= -->
+        <Grid IsVisible="{Binding IsCreatePopupOpen}"
+              Background="#80000000"
+              ZIndex="1000">
+
+            <Border Width="420"
+                    Padding="20"
+                    Background="#1E1E1E"
+                    CornerRadius="12"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
+                <StackPanel Spacing="12">
+
+                    <!-- Title -->
+                    <TextBlock Text="Create Bug"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="White"/>
+
+                    <!-- Title Field -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Title"
+                                   FontWeight="SemiBold"
+                                   Foreground="#CCCCCC"/>
+                        <TextBox Text="{Binding Title}"
+                                 Background="#2A2A2A"
+                                 Foreground="White"/>
+                    </StackPanel>
+
+                    <!-- Error Message -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Error Message"
+                                   FontWeight="SemiBold"
+                                   Foreground="#CCCCCC"/>
+                        <TextBox Text="{Binding ErrorMessage}"
+                                 Background="#2A2A2A"
+                                 Foreground="White"/>
+                    </StackPanel>
+
+                    <!-- Root Cause -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Root Cause"
+                                   Foreground="#CCCCCC"/>
+                        <TextBox Text="{Binding RootCause}"
+                                 Background="#2A2A2A"
+                                 Foreground="White"/>
+                    </StackPanel>
+
+                    <!-- Fix -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Fix"
+                                   Foreground="#CCCCCC"/>
+                        <TextBox Text="{Binding Fix}"
+                                 Background="#2A2A2A"
+                                 Foreground="White"/>
+                    </StackPanel>
+
+                    <!-- Stack Tags -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Stack Tags"
+                                   Foreground="#CCCCCC"/>
+                        <TextBox Text="{Binding StackTags}"
+                                 Background="#2A2A2A"
+                                 Foreground="White"/>
+                    </StackPanel>
+
+                    <!-- Time -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Time To Solve (min)"
+                                   Foreground="#CCCCCC"/>
+                        <TextBox Text="{Binding TimeToSolve}"
+                                 Background="#2A2A2A"
+                                 Foreground="White"/>
+                    </StackPanel>
+
+                    <!-- Severity -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Severity"
+                                   Foreground="#CCCCCC"/>
+                        <ComboBox ItemsSource="{Binding Severities}"
+                                  SelectedItem="{Binding Serverity}"
+                                  Background="#2A2A2A"
+                                  Foreground="White"/>
+                    </StackPanel>
+
+                    <!-- Buttons -->
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Spacing="10"
+                                Margin="0,10,0,0">
+
+                        <Button Content="Cancel"
+                                Background="#3A3A3A"
+                                Foreground="White"
+                                Padding="10,4"
+                                Command="{Binding CancelCreateCommand}"/>
+
+                        <Button Content="Save"
+                                Background="#0A84FF"
+                                Foreground="White"
+                                Padding="10,4"
+                                Command="{Binding SubmitBugCommand}"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+        </Grid>
+
     </Grid>
 </UserControl>

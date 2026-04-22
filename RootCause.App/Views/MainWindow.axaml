@@ -18,9 +18,6 @@
         <DataTemplate DataType="vm:BugListViewModel">
             <views:BugListView />
         </DataTemplate>
-        <DataTemplate DataType="vm:BugDetailViewModel">
-            <views:BugDetailView />
-        </DataTemplate>
         <DataTemplate DataType="vm:StatsViewModel">
             <views:StatsView />
         </DataTemplate>
@@ -38,9 +35,6 @@
                     HorizontalAlignment="Stretch"/>
             <Button Content="Stats"
                     Command="{Binding NavigateToStatsCommand}"
-                    HorizontalAlignment="Stretch"/>
-            <Button Content="+ New Bug"
-                    Command="{Binding NavigateToBugDetailCommand}"
                     HorizontalAlignment="Stretch"/>
         </StackPanel>
 
